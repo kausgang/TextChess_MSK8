@@ -1,0 +1,83 @@
+// const amqp = require("amqplib");
+const { Server } = require("socket.io");
+const axios = require("axios").default;
+
+const cors_config = {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+};
+
+const io = new Server(cors_config);
+
+var q = "engine-user";
+var open = require("amqplib").connect("amqp://localhost");
+
+// Consumer
+open
+  .then(function (conn) {
+    return conn.createChannel();
+  })
+  .then(function (ch) {
+    return ch.assertQueue(q, { durable: false }).then(function (ok) {
+      return ch.consume(q, function (msg) {
+        if (msg !== null) {
+          console.log(msg.content.toString());
+
+          // axios
+          //   .post("http://localhost:3000/engineMoveHandler", {
+          //     engine_move: msg,
+          //   })
+          //   .then(function (response) {
+          //     console.log(response);
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error);
+          //   });
+          ch.ack(msg);
+        }
+      });
+    });
+  })
+  .catch(console.warn);
+
+// io.on("connection", (socket) => {
+
+//   amqp
+//     .connect("amqp://localhost")
+//     .then(function (conn) {
+//       process.once("SIGINT", function () {
+//         conn.close();
+//       });
+//       return conn.createChannel().then(function (ch) {
+//         var ok = ch.assertQueue("engine-user", { durable: false });
+
+//         ok = ok.then(function (_qok) {
+//           return ch.consume(
+//             "engine-user",
+//             function (msg) {
+//               // const message = JSON.parse(msg.content.toString());
+//               const message = msg.content.toString();
+//               console.log(" [x] Received '%s'", message);
+
+//               engineResponse = message;
+//             },
+//             { noAck: true }
+//           );
+//         });
+
+//         return ok.then(function (_consumeOk) {
+//           console.log(" [*] Waiting for messages. To exit press CTRL+C");
+//         });
+//       });
+//     })
+//     .catch(console.warn);
+
+//   // once received, send move to client
+//   socket.emit("move", { color: "black", move: engineResponse });
+
+//   console.log("connected rabit");
+// });
+
+// io.listen(4000);
