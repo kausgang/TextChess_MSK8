@@ -1,6 +1,10 @@
 var amqp = require("amqplib");
 
-const { config } = require("./CONFIG/config");
+// const { config } = require("./CONFIG/config");
+const config = {};
+config.rabbitMqServer = process.env.TEXTCHESS_RABBITMQSERVER;
+config.receiverQueueName = process.env.TEXTCHESS_TO_ENGINE_Q;
+config.senderQueueName = process.env.TEXTCHESS_FROM_ENGINE_Q;
 
 const e_putInQ = (params) => {
   // console.log("params=" + params);

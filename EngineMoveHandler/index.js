@@ -6,7 +6,12 @@ const msg_map = new Map();
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const { config } = require("./CONFIG/config");
+// const { config } = require("./CONFIG/config");
+const config = {};
+config.rabbitMqServer = process.env.TEXTCHESS_RABBITMQSERVER;
+// config.receiverQueueName = process.env.TEXTCHESS_TO_ENGINE_Q;
+config.queueName = process.env.TEXTCHESS_FROM_ENGINE_Q;
+config.expressPort = process.env.TEXTCHESS_ENGINEMOVEHANDLER_EXPRESSPORT;
 
 const app = express();
 const httpServer = createServer(app);

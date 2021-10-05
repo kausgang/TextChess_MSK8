@@ -3,7 +3,12 @@
 /**
  * Module dependencies.
  */
-require("../CONFIG/config");
+// require("../CONFIG/config");
+const config = {};
+// config.rabbitMqServer = process.env.TEXTCHESS_RABBITMQSERVER;
+// config.receiverQueueName = process.env.TEXTCHESS_TO_ENGINE_Q;
+// config.senderQueueName = process.env.TEXTCHESS_FROM_ENGINE_Q;
+config.expressPort = process.env.TEXTCHESS_USERMOVEHANDLER_EXPRESSPORT;
 
 var app = require("../app");
 var debug = require("debug")("test:server");
