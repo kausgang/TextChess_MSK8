@@ -1,7 +1,0 @@
-#CONFIGMAP CONTENT
-
-textchess_rabbitMqServer = "amqp://localhost";
-textchess_to_engine_Q = "user-engine"
-textchess_from_engine_Q = "engine-user"
-textchess_enginemovehandler_expressPort = 7000;
-textchess_usermovehandler_expressPort = 3000;

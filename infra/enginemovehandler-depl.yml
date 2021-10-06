@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: engine-deployment
+  name: enginemovehandler-deployment
   labels:
-    app: engine
+    app: enginemovehandler
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: engine
+      app: enginemovehandler
   template:
     metadata:
       labels:
-        app: engine
+        app: enginemovehandler
     spec:
       containers:
-        - name: engine
-          image: engine
+        - name: enginemovehandler
+          image: enginemovehandler
           envFrom:
             - configMapRef:
                 name: textchess-config
@@ -37,11 +37,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: engine-srvc
+  name: enginemovehandler-srvc
 spec:
   type: ClusterIP
   selector:
-    app: engine
+    app: enginemovehandler
   ports:
-    - name: engine-port
-      port: 5000
+    - name: enginemovehandler-port
+      port: 7000

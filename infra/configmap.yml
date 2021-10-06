@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: textchess-config
+data:
+  # property-like keys; each key maps to a simple value
+  TEXTCHESS_RABBITMQSERVER: "amqp://rabbitmq-srvc:5672"
+  TEXTCHESS_TO_ENGINE_Q: "user-engine"
+  TEXTCHESS_FROM_ENGINE_Q: "engine-user"
+  TEXTCHESS_ENGINEMOVEHANDLER_EXPRESSPORT: 7000;
+  TEXTCHESS_USERMOVEHANDLER_EXPRESSPORT: 3000;

@@ -1,0 +1,22 @@
+apiVersion: skaffold/v2beta22
+kind: Config
+metadata:
+  name: textchess-msk8
+build:
+  artifacts:
+    - image: engine
+      context: ENGINE
+      docker:
+        dockerfile: Dockerfile
+    - image: enginemovehandler
+      context: EngineMoveHandler
+      docker:
+        dockerfile: Dockerfile
+    - image: usermovehandler
+      context: UserMoveHandler
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - infra/*.yml
