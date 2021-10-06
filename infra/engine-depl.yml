@@ -1,4 +1,4 @@
-# RabbitMQ deployment
+# ENGINE deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,7 +33,7 @@ spec:
             ]
 
 ---
-# clusterIP service for rabbitMQ
+# clusterIP service for ENGINE
 apiVersion: v1
 kind: Service
 metadata:

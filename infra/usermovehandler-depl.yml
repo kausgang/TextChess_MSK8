@@ -1,0 +1,47 @@
+# UserMoveHandler deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usermovehandler-deployment
+  labels:
+    app: useremovehandler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usermovehandler
+  template:
+    metadata:
+      labels:
+        app: usermovehandler
+    spec:
+      containers:
+        - name: usermovehandler
+          image: usermovehandler
+          envFrom:
+            - configMapRef:
+                name: textchess-config
+      # # rabbitmq container takes time to come up. used init container to check management url. the engine container will wait untill rabbitmq service is up
+      # initContainers:
+      #   - name: init-rabbitmq
+      #     image: busybox:1.28
+      #     command:
+      #       [
+      #         "sh",
+      #         "-c",
+      #         "until [ `wget --server-response --spider --quiet  http://rabbitmq-srvc:15672 2>&1|awk 'NR==1{print $2}'` -eq 200 ]; do echo Waiting for RabbitMQ service to come up;sleep 5;done",
+      #       ]
+
+---
+# clusterIP service for UserMoveHandler
+apiVersion: v1
+kind: Service
+metadata:
+  name: usermovehandler-srvc
+spec:
+  type: ClusterIP
+  selector:
+    app: usermovehandler
+  ports:
+    - name: enginemovehandler-port
+      port: 3000
