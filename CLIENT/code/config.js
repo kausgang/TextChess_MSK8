@@ -1,4 +1,4 @@
 const config = {
-  userMoveHandlerURL: "http://localhost:3000",
-  engineMoveHandlerURL: "http://localhost:7000/",
+  userMoveHandlerURL: "http://textchess.com/usermovehandler",
+  engineMoveHandlerURL: "http://textchess.com/enginemovehandler",
 };

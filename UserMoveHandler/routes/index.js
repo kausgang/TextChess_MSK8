@@ -63,4 +63,9 @@ router.post("/", (req, res, next) => {
     next();
   }
 });
+
+router.get("/", (req, res) => {
+  console.log("Inside get route");
+  res.send("Inside get route");
+});
 module.exports = router;

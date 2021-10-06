@@ -6,14 +6,28 @@ build:
   artifacts:
     - image: engine
       context: ENGINE
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
       docker:
         dockerfile: Dockerfile
     - image: enginemovehandler
       context: EngineMoveHandler
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
       docker:
         dockerfile: Dockerfile
     - image: usermovehandler
       context: UserMoveHandler
+      sync:
+        manual:
+          - src: "index.js"
+            dest: ./routes
+          - src: "rabbitMqSender.js"
+            dest: ./MIDDLEWARE
       docker:
         dockerfile: Dockerfile
 deploy:

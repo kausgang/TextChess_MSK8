@@ -44,4 +44,6 @@ spec:
     app: enginemovehandler
   ports:
     - name: enginemovehandler-port
+      protocol: TCP
       port: 7000
+      targetPort: 7000

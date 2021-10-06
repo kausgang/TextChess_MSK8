@@ -43,5 +43,7 @@ spec:
   selector:
     app: usermovehandler
   ports:
-    - name: enginemovehandler-port
+    - name: usermovehandler-port
+      protocol: TCP
       port: 3000
+      targetPort: 3000
