@@ -4,10 +4,21 @@ metadata:
   name: minimal-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/enable-cors: "false"
+    # nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/websocket-services: "app-sockets-cluster-ip-service"
 spec:
   rules:
     - http:
         paths:
+          - path: /enginemovehandler
+            pathType: Prefix
+            backend:
+              service:
+                name: enginemovehandler-srvc
+                port:
+                  number: 7000
           - path: /usermovehandler
             pathType: Prefix
             backend:
@@ -15,3 +26,11 @@ spec:
                 name: usermovehandler-srvc
                 port:
                   number: 3000
+
+          # - path: /socket.io/?(.*)
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: enginemovehandler-srvc
+          #       port:
+          #         number: 7000

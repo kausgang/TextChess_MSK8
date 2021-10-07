@@ -6,6 +6,9 @@ const msg_map = new Map();
 const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+
+var cors = require("cors");
+
 // const { config } = require("./CONFIG/config");
 const config = {};
 config.rabbitMqServer = process.env.TEXTCHESS_RABBITMQSERVER;
@@ -14,6 +17,9 @@ config.queueName = process.env.TEXTCHESS_FROM_ENGINE_Q;
 config.expressPort = process.env.TEXTCHESS_ENGINEMOVEHANDLER_EXPRESSPORT;
 
 const app = express();
+
+app.use(cors());
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -74,6 +80,10 @@ io.on("connection", (socket) => {
     // delete the move from the temporary storage
     msg_map.delete(clientID);
   });
+});
+
+app.get("/", (req, res) => {
+  res.send("working");
 });
 
 // httpServer.listen(7000);
