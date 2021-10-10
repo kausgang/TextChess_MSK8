@@ -45,18 +45,12 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-- UUID -->
     <!-- generate uniqueID for each client with uuudv4() methid in main.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
 
     <!-- CLIPBOARDJS -->
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
-
-    <!-- SOCKET
-    <script
-      src="https://cdn.socket.io/4.1.2/socket.io.min.js"
-      integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg"
-      crossorigin="anonymous"
-    ></script> -->
 
     <!-- SOCKET -->
     <script
@@ -175,13 +169,12 @@
   </body>
 
   <script>
-    // console.log(config.engineMoveHandlerURL);
+    // const socket = io(config.engineMoveHandlerURL, {
+    //   transports: ["websocket"],
+    // });
+
     const socket = io(config.engineMoveHandlerURL, {
       transports: ["websocket"],
     });
-
-    // const socket = io("http://localhost:4000", {
-    //   transports: ["websocket"],
-    // });
   </script>
 </html>

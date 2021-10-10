@@ -6,7 +6,13 @@ let firstMove_User = true;
 
 jQuery(() => {
   // generate client ID
-  clientID = uuidv4();
+  // clientID = uuidv4();
+
+  let clientID = "";
+  socket.on("clientID", (args) => {
+    clientID = args;
+  });
+  // clientID = socket.id;
 
   // access config data like this
   // console.log(config.url);
@@ -17,7 +23,6 @@ jQuery(() => {
 
   // // OPEN SOCKET connection
   // const socket = io.connect(config.engineMoveHandlerURL);
-  // const socket = io(config.engineMoveHandlerURL);
 
   // const socket = io("http://localhost:59507", {
   //   transport: ["websocket"],

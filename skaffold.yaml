@@ -12,6 +12,7 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
+
     - image: enginemovehandler
       context: EngineMoveHandler
       sync:
@@ -20,6 +21,7 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
+
     - image: usermovehandler
       context: UserMoveHandler
       sync:
@@ -30,7 +32,34 @@ build:
             dest: ./MIDDLEWARE
       docker:
         dockerfile: Dockerfile
+
+    # - image: enginemovereceiver
+    #   context: EngineMoveReceiver
+    #   sync:
+    #     manual:
+    #       - src: "index.js"
+    #         dest: .
+    #   docker:
+    #     dockerfile: Dockerfile
+
+    # - image: enginemovesender
+    #   context: EngineMoveSender
+    #   sync:
+    #     manual:
+    #       - src: "index.js"
+    #         dest: .
+    #   docker:
+    #     dockerfile: Dockerfile
+
 deploy:
   kubectl:
     manifests:
-      - infra/*.yml
+      # - infra/SKAFFOLD/*.yml
+      - infra/configmap.yml
+      - infra/ingress-rules.yml
+      - infra/enginemovehandler-depl.yml
+      - infra/rabbitmq-depl.yml
+      - infra/usermovehandler-depl.yml
+      - infra/engine-depl.yml
+      # - infra/enginemovereceiver-depl.yml
+      # - infra/enginemovesender-depl.yml

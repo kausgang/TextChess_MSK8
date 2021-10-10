@@ -1,24 +1,37 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minimal-ingress
+  name: textchess-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/enable-cors: "false"
-    # nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/websocket-services: "app-sockets-cluster-ip-service"
+    # nginx.org/websocket-services
+    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # nginx.ingress.kubernetes.io/server-snippets: |
+    #   location / {
+    #     proxy_set_header Upgrade $http_upgrade;
+    #     proxy_http_version 1.1;
+    #     proxy_set_header X-Forwarded-Host $http_host;
+    #     proxy_set_header X-Forwarded-Proto $scheme;
+    #     proxy_set_header X-Forwarded-For $remote_addr;
+    #     proxy_set_header Host $host;
+    #     proxy_set_header Connection "upgrade";
+    #     proxy_cache_bypass $http_upgrade;
+    #     }
+
 spec:
   rules:
     - http:
         paths:
-          - path: /enginemovehandler
-            pathType: Prefix
-            backend:
-              service:
-                name: enginemovehandler-srvc
-                port:
-                  number: 7000
+          # - path: /enginemovesender
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: enginemovesender-srvc
+          #       port:
+          #         number: 4000
+
           - path: /usermovehandler
             pathType: Prefix
             backend:
@@ -27,10 +40,28 @@ spec:
                 port:
                   number: 3000
 
+          - path: /enginemovehandler/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: enginemovehandler-srvc
+                port:
+                  number: 4000
+
           # - path: /socket.io/?(.*)
           #   pathType: Prefix
           #   backend:
           #     service:
           #       name: enginemovehandler-srvc
           #       port:
-          #         number: 7000
+          #         number: 4000
+
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: enginemovehandler-srvc
+                port:
+                  number: 4000
+
+          # ws://textchess.com/socket.io/?EIO=4&transport=websocket

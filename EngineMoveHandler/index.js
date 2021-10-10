@@ -7,8 +7,6 @@ const express = require("express");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
-var cors = require("cors");
-
 // const { config } = require("./CONFIG/config");
 const config = {};
 config.rabbitMqServer = process.env.TEXTCHESS_RABBITMQSERVER;
@@ -18,7 +16,8 @@ config.expressPort = process.env.TEXTCHESS_ENGINEMOVEHANDLER_EXPRESSPORT;
 
 const app = express();
 
-app.use(cors());
+// console.log(config.expressPort);
+// app.use(cors());
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -82,12 +81,8 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.send("working");
-});
-
 // httpServer.listen(7000);
-httpServer.listen(config.expressPort);
+// httpServer.listen(config.expressPort);
 
 // **********************************************************
 
@@ -105,7 +100,9 @@ open
   .then(function (ch) {
     return ch.assertQueue(q, { durable: false }).then(function (ok) {
       return ch.consume(q, function (msg) {
-        if (msg !== null) {
+        console.log(msg.content.toString());
+
+        if (msg !== null || msg !== "") {
           // console.log(msg.content.toString());
 
           let msg_json = JSON.parse(msg.content.toString());
@@ -133,3 +130,10 @@ open
     });
   })
   .catch(console.warn);
+
+// httpServer.listen(config.expressPort, () => {
+//   console.log(`listening on ${config.expressPort}`);
+// });
+
+// httpServer.listen(config.expressPort);
+httpServer.listen(4000);

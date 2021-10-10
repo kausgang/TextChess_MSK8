@@ -1,23 +1,23 @@
-# EngineMoveHandler deployment
+# ENGINE deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: enginemovehandler-deployment
+  name: enginemovereceiver-deployment
   labels:
-    app: enginemovehandler
+    app: enginemovereceiver
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: enginemovehandler
+      app: enginemovereceiver
   template:
     metadata:
       labels:
-        app: enginemovehandler
+        app: enginemovereceiver
     spec:
       containers:
-        - name: enginemovehandler
-          image: enginemovehandler
+        - name: enginemovereceiver
+          image: enginemovereceiver
           envFrom:
             - configMapRef:
                 name: textchess-config
@@ -33,19 +33,17 @@ spec:
             ]
 
 ---
-# clusterIP service for EngineMoveHandler
+# clusterIP service for ENGINE
 apiVersion: v1
 kind: Service
 metadata:
-  name: enginemovehandler-srvc
-  labels:
-    app: enginemovehandler
+  name: enginemovereceiver-srvc
 spec:
   type: ClusterIP
   selector:
-    app: enginemovehandler
+    app: enginemovereceiver
   ports:
-    - name: enginemovehandler-port
+    - name: enginemovereceiver-port
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 6000
+      # targetPort: 5000
